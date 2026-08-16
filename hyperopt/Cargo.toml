@@ -1,0 +1,25 @@
+[package]
+name = "hyperopt"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "hyperopt-rs: an Optuna-shaped hyperparameter optimization framework for Rust. Ergonomic facade over the hyperopt-core/samplers/pruners/storage crates."
+
+[dependencies]
+hyperopt-core = { workspace = true }
+hyperopt-samplers = { workspace = true }
+hyperopt-pruners = { workspace = true }
+hyperopt-storage = { workspace = true }
+
+[dev-dependencies]
+tempfile = "3"
+
+[features]
+default = ["sqlite"]
+# Local multi-threaded trial execution (Study::optimize_parallel).
+parallel = ["hyperopt-core/parallel"]
+# SqliteStorage backend.
+sqlite = ["hyperopt-storage/sqlite"]

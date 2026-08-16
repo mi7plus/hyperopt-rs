@@ -1,0 +1,23 @@
+[package]
+name = "hyperopt-storage"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Storage backends for hyperopt-rs: InMemoryStorage and SqliteStorage (resumable studies)."
+
+[dependencies]
+hyperopt-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rusqlite = { workspace = true, optional = true }
+
+[features]
+default = ["sqlite"]
+# SqliteStorage via rusqlite (bundled SQLite — no system dependency).
+sqlite = ["dep:rusqlite"]
+
+[dev-dependencies]
+tempfile = "3"

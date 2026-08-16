@@ -1,0 +1,18 @@
+[package]
+name = "hyperopt-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Core abstractions for hyperopt-rs: Study, Trial, and the Sampler/Pruner/Storage extension traits (define-by-run HPO)."
+
+[dependencies]
+serde = { workspace = true }
+rayon = { workspace = true, optional = true }
+
+[features]
+default = []
+# Enables Study::optimize_parallel (local multi-threaded trial execution).
+parallel = ["dep:rayon"]

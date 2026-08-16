@@ -1,0 +1,17 @@
+[package]
+name = "hyperopt-viz"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Optional visualization + parameter-importance analysis for hyperopt-rs studies."
+
+[dependencies]
+hyperopt-core = { workspace = true }
+plotters = { workspace = true }
+
+[dev-dependencies]
+rand = { workspace = true }
+tempfile = "3"

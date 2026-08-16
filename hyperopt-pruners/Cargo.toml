@@ -1,0 +1,16 @@
+[package]
+name = "hyperopt-pruners"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Pruners (early-stopping policies) for hyperopt-rs: Nop, Median, and SuccessiveHalving (ASHA)."
+
+[dependencies]
+hyperopt-core = { workspace = true }
+
+[dev-dependencies]
+hyperopt-samplers = { workspace = true }
+hyperopt-storage = { workspace = true }
