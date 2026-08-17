@@ -11,7 +11,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT"
 authors = ["mi7plus"]
@@ -20,10 +20,10 @@ rust-version = "1.88"
 
 [workspace.dependencies]
 # Internal crates
-hyperopt-core = { version = "0.1.0", path = "hyperopt-core" }
-hyperopt-samplers = { version = "0.1.0", path = "hyperopt-samplers" }
-hyperopt-pruners = { version = "0.1.0", path = "hyperopt-pruners" }
-hyperopt-storage = { version = "0.1.0", path = "hyperopt-storage" }
+hyperopt-core = { version = "0.1.1", path = "hyperopt-core" }
+hyperopt-samplers = { version = "0.1.1", path = "hyperopt-samplers" }
+hyperopt-pruners = { version = "0.1.1", path = "hyperopt-pruners" }
+hyperopt-storage = { version = "0.1.1", path = "hyperopt-storage" }
 
 # External
 rand = "0.10"

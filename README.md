@@ -130,14 +130,10 @@ And the follow-ups to those, also now built:
   (`listen_tls` / `connect_tls`; `ring` provider, no OpenSSL). Plain TCP remains
   the default for a trusted network.
 
-Not done in this build (they depend on external repos / a publish step):
+All crates are published on crates.io (`cargo add hyperopt-rs`). Still open:
 
 - **Notebook integration** — swapping `hyperopt-rs` into the `rust-ml-guide` /
   `model-selection-rs` notebooks (needs those companion repos).
-- **Publishing to crates.io** (name reservation + `cargo publish`).
-  Publish-readiness prep: run `cargo publish --dry-run` per member in dependency
-  order (`hyperopt-core` first, `hyperopt-rs` facade last) and verify names on
-  crates.io before committing to them.
 
 ## License
 

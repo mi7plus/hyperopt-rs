@@ -6,7 +6,8 @@ license.workspace = true
 authors.workspace = true
 repository.workspace = true
 rust-version.workspace = true
-description = "Samplers for hyperopt-rs: RandomSampler, GridSampler, and TpeSampler (wraps the `tpe` crate)."
+description = "Samplers for hyperopt-rs: RandomSampler, GridSampler, TpeSampler (wraps the `tpe` crate), and a from-scratch CMA-ES."
+readme = "README.md"
 
 [dependencies]
 hyperopt-core = { workspace = true }

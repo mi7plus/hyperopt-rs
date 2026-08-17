@@ -215,7 +215,7 @@ dependencies = [
 
 [[package]]
 name = "hyperopt-core"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "rayon",
  "serde",
@@ -223,7 +223,7 @@ dependencies = [
 
 [[package]]
 name = "hyperopt-distributed"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "hyperopt-core",
  "hyperopt-pruners",
@@ -237,7 +237,7 @@ dependencies = [
 
 [[package]]
 name = "hyperopt-pruners"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "hyperopt-core",
  "hyperopt-samplers",
@@ -246,7 +246,7 @@ dependencies = [
 
 [[package]]
 name = "hyperopt-rs"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "hyperopt-core",
  "hyperopt-pruners",
@@ -257,7 +257,7 @@ dependencies = [
 
 [[package]]
 name = "hyperopt-samplers"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "hyperopt-core",
  "hyperopt-storage",
@@ -267,7 +267,7 @@ dependencies = [
 
 [[package]]
 name = "hyperopt-storage"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "hyperopt-core",
  "rusqlite",
@@ -278,7 +278,7 @@ dependencies = [
 
 [[package]]
 name = "hyperopt-viz"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "hyperopt-core",
  "plotters",

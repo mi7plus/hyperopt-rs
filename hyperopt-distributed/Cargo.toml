@@ -7,6 +7,7 @@ authors.workspace = true
 repository.workspace = true
 rust-version.workspace = true
 description = "Multi-machine distributed execution for hyperopt-rs: a study coordinator server and a worker client, over TCP."
+readme = "README.md"
 
 [features]
 # Optional TLS transport via rustls (ring crypto provider; no OpenSSL needed).

@@ -7,6 +7,7 @@ authors.workspace = true
 repository.workspace = true
 rust-version.workspace = true
 description = "hyperopt-rs: an Optuna-shaped hyperparameter optimization framework for Rust. Ergonomic facade over the hyperopt-core/samplers/pruners/storage crates."
+readme = "../README.md"
 
 [dependencies]
 hyperopt-core = { workspace = true }

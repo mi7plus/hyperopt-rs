@@ -6,7 +6,8 @@ license.workspace = true
 authors.workspace = true
 repository.workspace = true
 rust-version.workspace = true
-description = "Optional visualization + parameter-importance analysis for hyperopt-rs studies."
+description = "Optional visualization and parameter-importance analysis for hyperopt-rs studies (optimization history, decision-stump proxy, and random-forest fANOVA)."
+readme = "README.md"
 
 [dependencies]
 hyperopt-core = { workspace = true }
