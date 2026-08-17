@@ -2,7 +2,7 @@
 //! calls, runs `optimize` with `RandomSampler`, and gets a sensible best trial
 //! on a toy problem (a 2D quadratic bowl with a known minimum).
 
-use hyperopt::prelude::*;
+use hyperopt_rs::prelude::*;
 
 /// f(x, y) = (x - 2)^2 + (y + 3)^2, minimized at (2, -3) with value 0.
 fn quadratic_bowl(trial: &mut TrialContext) -> ObjectiveResult {

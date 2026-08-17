@@ -6,7 +6,7 @@
 //! study can be assembled in one fluent expression.
 //!
 //! ```no_run
-//! use hyperopt::prelude::*;
+//! use hyperopt_rs::prelude::*;
 //!
 //! # fn main() -> Result<(), HyperoptError> {
 //! let study = StudyBuilder::new("quadratic")

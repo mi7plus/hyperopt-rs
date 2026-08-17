@@ -1,11 +1,11 @@
 //! End-to-end quickstart for `hyperopt-rs`.
 //!
-//! Run with:  `cargo run -p hyperopt --example quickstart`
+//! Run with:  `cargo run -p hyperopt-rs --example quickstart`
 //!
 //! Demonstrates define-by-run suggestions, a conditional search space, an
 //! iterative objective with median pruning, and reading back the best trial.
 
-use hyperopt::prelude::*;
+use hyperopt_rs::prelude::*;
 
 fn main() -> Result<(), HyperoptError> {
     let study = StudyBuilder::new("quickstart")

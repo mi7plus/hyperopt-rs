@@ -7,7 +7,7 @@
 //! difference is whether the pruner stops bad trajectories early. That isolates
 //! the effect being measured.
 
-use hyperopt::prelude::*;
+use hyperopt_rs::prelude::*;
 use std::sync::atomic::{AtomicUsize, Ordering};
 
 const N_TRIALS: usize = 40;

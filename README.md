@@ -10,7 +10,7 @@ as a static description, it is *discovered by calling* `suggest_*` methods insid
 the objective, which makes conditional / dynamic search spaces natural.
 
 ```rust
-use hyperopt::prelude::*;
+use hyperopt_rs::prelude::*;
 
 let study = StudyBuilder::new("quadratic")
     .direction(Direction::Minimize)
@@ -27,7 +27,7 @@ println!("best = {:?}", study.best_trial()?);
 ```
 
 Run the full quickstart (define-by-run, a conditional search space, and median
-pruning): `cargo run -p hyperopt --example quickstart`.
+pruning): `cargo run -p hyperopt-rs --example quickstart`.
 
 ## Workspace layout
 
@@ -42,7 +42,7 @@ are the real extension points — a third party can depend on just
 | [`hyperopt-samplers`](hyperopt-samplers) | `RandomSampler`, `GridSampler`, `TpeSampler` (wraps the [`tpe`](https://crates.io/crates/tpe) crate). |
 | [`hyperopt-pruners`](hyperopt-pruners) | `NopPruner`, `MedianPruner`, `SuccessiveHalvingPruner` (ASHA). |
 | [`hyperopt-storage`](hyperopt-storage) | `InMemoryStorage`, `SqliteStorage` (resumable studies; feature `sqlite`). |
-| [`hyperopt`](hyperopt) | Ergonomic facade: re-exports + `StudyBuilder` + `prelude`. |
+| [`hyperopt-rs`](hyperopt) | Ergonomic facade (crate `hyperopt-rs`, imported as `hyperopt_rs`): re-exports + `StudyBuilder` + `prelude`. |
 | [`hyperopt-viz`](hyperopt-viz) | Optional: optimization-history plot, a parameter-importance proxy, and full random-forest **fANOVA** importance. |
 | [`hyperopt-distributed`](hyperopt-distributed) | Optional: a `Coordinator` server + `Worker` client for **multi-machine** distributed execution over TCP. |
 
@@ -94,7 +94,7 @@ are the real extension points — a third party can depend on just
 ```bash
 cargo build --workspace
 cargo test  --workspace                      # core, samplers, pruners, storage, viz, distributed
-cargo test  -p hyperopt --features parallel  # includes the parallel-execution tests
+cargo test  -p hyperopt-rs --features parallel  # includes the parallel-execution tests
 ```
 
 ## Scope (what's implemented vs. deliberately not)
@@ -136,7 +136,7 @@ Not done in this build (they depend on external repos / a publish step):
   `model-selection-rs` notebooks (needs those companion repos).
 - **Publishing to crates.io** (name reservation + `cargo publish`).
   Publish-readiness prep: run `cargo publish --dry-run` per member in dependency
-  order (`hyperopt-core` first, `hyperopt` facade last) and verify names on
+  order (`hyperopt-core` first, `hyperopt-rs` facade last) and verify names on
   crates.io before committing to them.
 
 ## License

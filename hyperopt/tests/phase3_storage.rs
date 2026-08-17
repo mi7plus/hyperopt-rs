@@ -4,7 +4,7 @@
 //! We prove the history is really loaded and used by showing that TPE's
 //! post-reload suggestion differs from a cold start with the same seed.
 
-use hyperopt::prelude::*;
+use hyperopt_rs::prelude::*;
 
 fn sphere(trial: &mut TrialContext) -> ObjectiveResult {
     let x = trial.suggest_float("x", -10.0, 10.0);

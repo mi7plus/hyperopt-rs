@@ -1,11 +1,11 @@
 //! Phase 4 definition-of-done: parallel execution produces valid results (no
 //! data races, all trials recorded) and shows a real speedup over sequential
 //! on an objective with an artificial per-trial cost. Only built with the
-//! `parallel` feature: `cargo test -p hyperopt --features parallel`.
+//! `parallel` feature: `cargo test -p hyperopt-rs --features parallel`.
 
 #![cfg(feature = "parallel")]
 
-use hyperopt::prelude::*;
+use hyperopt_rs::prelude::*;
 use std::time::{Duration, Instant};
 
 /// Sphere with an artificial per-trial cost so the parallelism benefit is

@@ -3,7 +3,7 @@
 //! reproducible under a fixed seed, and coexists with categorical parameters
 //! (which fall back to independent sampling).
 
-use hyperopt::prelude::*;
+use hyperopt_rs::prelude::*;
 
 /// 3D sphere centred at (2, -3, 1.5); minimum value 0.
 fn sphere(trial: &mut TrialContext) -> ObjectiveResult {

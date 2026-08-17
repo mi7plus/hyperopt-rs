@@ -214,17 +214,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "hyperopt"
-version = "0.1.0"
-dependencies = [
- "hyperopt-core",
- "hyperopt-pruners",
- "hyperopt-samplers",
- "hyperopt-storage",
- "tempfile",
-]
-
-[[package]]
 name = "hyperopt-core"
 version = "0.1.0"
 dependencies = [
@@ -253,6 +242,17 @@ dependencies = [
  "hyperopt-core",
  "hyperopt-samplers",
  "hyperopt-storage",
+]
+
+[[package]]
+name = "hyperopt-rs"
+version = "0.1.0"
+dependencies = [
+ "hyperopt-core",
+ "hyperopt-pruners",
+ "hyperopt-samplers",
+ "hyperopt-storage",
+ "tempfile",
 ]
 
 [[package]]

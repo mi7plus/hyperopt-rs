@@ -2,7 +2,7 @@
 //! `Sampler` API and are interchangeable through `Study`; and TPE converges to
 //! a better best-value on average than random given enough trials.
 
-use hyperopt::prelude::*;
+use hyperopt_rs::prelude::*;
 
 /// 3D sphere centred at (2, -3, 1.5); minimum value 0.
 fn sphere(trial: &mut TrialContext) -> ObjectiveResult {
