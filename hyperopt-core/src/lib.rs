@@ -37,6 +37,7 @@ mod error;
 mod storage;
 mod study;
 mod study_state;
+mod suggest;
 mod traits;
 mod trial;
 mod value;
@@ -47,15 +48,18 @@ pub use error::{HyperoptError, ObjectiveError, ObjectiveResult};
 pub use storage::{Storage, StorageError, StudyMetadata};
 pub use study::Study;
 pub use study_state::StudyState;
+pub use suggest::Suggest;
 pub use traits::{Pruner, Sampler};
 pub use trial::{ParamRecord, Trial, TrialState};
 pub use value::Value;
+
+use serde::{Deserialize, Serialize};
 
 /// Optimization direction: whether the objective should be minimized or
 /// maximized. Samplers and pruners read this from [`StudyState::direction`] and
 /// adjust accordingly (e.g. TPE always minimizes internally, negating values
 /// under `Maximize`).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Direction {
     Minimize,
     Maximize,

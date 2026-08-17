@@ -43,14 +43,20 @@ are the real extension points — a third party can depend on just
 | [`hyperopt-pruners`](hyperopt-pruners) | `NopPruner`, `MedianPruner`, `SuccessiveHalvingPruner` (ASHA). |
 | [`hyperopt-storage`](hyperopt-storage) | `InMemoryStorage`, `SqliteStorage` (resumable studies; feature `sqlite`). |
 | [`hyperopt`](hyperopt) | Ergonomic facade: re-exports + `StudyBuilder` + `prelude`. |
-| [`hyperopt-viz`](hyperopt-viz) | Optional: optimization-history plot + a parameter-importance proxy. |
+| [`hyperopt-viz`](hyperopt-viz) | Optional: optimization-history plot, a parameter-importance proxy, and full random-forest **fANOVA** importance. |
+| [`hyperopt-distributed`](hyperopt-distributed) | Optional: a `Coordinator` server + `Worker` client for **multi-machine** distributed execution over TCP. |
 
 ## Features
 
-- **Samplers** — random (baseline), exhaustive grid, and adaptive TPE. All
-  three implement the same `Sampler` trait and are interchangeable through one
-  `Study` API. On a 3-D sphere with an 80-trial budget, TPE reaches a mean best
-  of ~0.5 versus random's ~7.6 (see `hyperopt/tests/phase15_samplers.rs`).
+- **Samplers** — random (baseline), exhaustive grid, adaptive TPE, and
+  **CMA-ES**. All implement the same `Sampler` trait and are interchangeable
+  through one `Study` API. On a 3-D sphere with an 80-trial budget, both TPE and
+  CMA-ES reach a mean best of ~0.5 versus random's ~7.6 (see
+  `hyperopt/tests/phase15_samplers.rs` and `hyperopt/tests/phase16_cmaes.rs`).
+  CMA-ES is a from-scratch (μ/μ_w, λ) implementation — including its own
+  symmetric eigensolver — that adapts a full covariance to the objective's local
+  geometry; it optimizes the numeric parameters and leaves categoricals to
+  independent sampling.
 - **Pruning** — report intermediate values with `trial.report(step, value)` and
   check `trial.should_prune()`. On a synthetic 30-step benchmark, `MedianPruner`
   cuts ~50% of objective evaluations with no loss in best value
@@ -68,44 +74,67 @@ are the real extension points — a third party can depend on just
   why parallel and sequential runs of the same study can diverge somewhat.
   Compare best-values, not exact trajectories.
 
-- **Visualization** — `optimization_history_svg(...)` renders the
+- **Visualization & importance** — `optimization_history_svg(...)` renders the
   best-value-so-far curve; `parameter_importance(...)` gives a lightweight
-  proxy for which parameters matter.
+  decision-stump proxy for which parameters matter, and `fanova_importance(...)`
+  runs the full random-forest **fANOVA** (Hutter et al. 2014), attributing
+  objective variance to each parameter's main effect by an exact functional-ANOVA
+  decomposition of the forest (see `hyperopt-viz/tests/viz.rs`).
+
+- **Distributed execution** — `hyperopt-distributed` adds a `Coordinator` server
+  and a `Worker` client so trials run across **many machines** against one
+  authoritative study. The coordinator owns the sampler/pruner/storage and
+  assigns every trial number atomically; workers run the objective locally and
+  round-trip each `suggest_*` call back. Because the remote trial implements the
+  same `Suggest` trait as `TrialContext`, one objective closure runs unchanged
+  locally or distributed (`cargo run -p hyperopt-distributed --example distributed`).
 
 ## Building and testing
 
 ```bash
 cargo build --workspace
-cargo test  --workspace                      # core, samplers, pruners, storage, viz
+cargo test  --workspace                      # core, samplers, pruners, storage, viz, distributed
 cargo test  -p hyperopt --features parallel  # includes the parallel-execution tests
 ```
 
 ## Scope (what's implemented vs. deliberately not)
 
-Implemented and tested: **Phases 1–5** of [`PLAN.md`](PLAN.md) — the core
-define-by-run API, all three samplers, all three pruners, both storage backends,
-local parallel execution, and the visualization / importance layer.
+Implemented and tested: the core
+define-by-run API, all samplers, all three pruners, both storage backends,
+local parallel execution, and the visualization / importance layer — plus the
+three items originally deferred past v1, now built:
 
-Explicitly **out of scope for v1** (stated up front, not discovered later):
+- **True multi-machine distributed execution** — `hyperopt-distributed` adds a
+  coordinator/worker system (see the Distributed-execution feature above). The
+  earlier `SqliteStorage` shared-file approach remains as a lighter-weight,
+  local-only middle ground.
+- **fANOVA-based parameter importance** — `fanova_importance(...)` implements the
+  full random-forest functional-ANOVA method alongside the original decision-stump
+  proxy, which is kept as the cheap default. fANOVA marginalizes over the other
+  parameters (the proxy does not) and so is far less fooled by correlated
+  sampling; its main effects deliberately do not fold in interaction variance.
+- **CMA-ES sampling** — `CmaEsSampler` is a from-scratch (μ/μ_w, λ) implementation
+  interchangeable with the other samplers through the `Sampler` trait. Bound
+  handling defaults to reflection (`BoundHandling::Reflect`) — folding out-of-box
+  draws back inside with a tent map instead of piling them on the boundary — with
+  clamping selectable.
 
-- **True multi-machine distributed execution** — v1 covers local multi-threaded
-  parallelism only. `SqliteStorage` does allow several local processes to share
-  one study file as a lighter-weight middle ground.
-- **fANOVA-based parameter importance** — `hyperopt-viz` ships a simpler,
-  clearly-documented decision-stump *proxy* (variance explained by the best
-  single split) instead. It reliably ranks an influential parameter above an
-  irrelevant one but is **not** the same statistical method as Optuna's fANOVA
-  and ignores interaction effects. A `smartcore`-random-forest importance would
-  be the natural richer follow-up.
-- **CMA-ES sampling** — a plausible v2 addition, not required for the framework
-  to be useful.
+And the follow-ups to those, also now built:
 
-Not done in this build (they depend on external repos / a publish step, tracked
-in `PLAN.md`):
+- **fANOVA interaction effects** — `fanova_interactions(...)` reports the
+  second-order terms: how much variance each *pair* of parameters explains
+  together beyond their individual main effects.
+- **Secured distributed transport** — the coordinator supports an optional
+  shared-secret token (`Coordinator::require_token` / `Worker::authenticate`,
+  constant-time compared) and, behind the `tls` feature, TLS via `rustls`
+  (`listen_tls` / `connect_tls`; `ring` provider, no OpenSSL). Plain TCP remains
+  the default for a trusted network.
 
-- **Phase 6** — swapping `hyperopt-rs` into the `rust-ml-guide` /
+Not done in this build (they depend on external repos / a publish step):
+
+- **Notebook integration** — swapping `hyperopt-rs` into the `rust-ml-guide` /
   `model-selection-rs` notebooks (needs those companion repos).
-- **Phase 7** — publishing to crates.io (name reservation + `cargo publish`).
+- **Publishing to crates.io** (name reservation + `cargo publish`).
   Publish-readiness prep: run `cargo publish --dry-run` per member in dependency
   order (`hyperopt-core` first, `hyperopt` facade last) and verify names on
   crates.io before committing to them.

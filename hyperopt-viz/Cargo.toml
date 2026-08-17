@@ -11,7 +11,7 @@ description = "Optional visualization + parameter-importance analysis for hypero
 [dependencies]
 hyperopt-core = { workspace = true }
 plotters = { workspace = true }
+rand = { workspace = true }
 
 [dev-dependencies]
-rand = { workspace = true }
 tempfile = "3"

@@ -30,7 +30,7 @@ pub use hyperopt_core::{
     TrialState, Value,
 };
 pub use hyperopt_pruners::{MedianPruner, NopPruner, SuccessiveHalvingPruner};
-pub use hyperopt_samplers::{GridSampler, RandomSampler, TpeSampler};
+pub use hyperopt_samplers::{BoundHandling, CmaEsSampler, GridSampler, RandomSampler, TpeSampler};
 pub use hyperopt_storage::InMemoryStorage;
 #[cfg(feature = "sqlite")]
 pub use hyperopt_storage::SqliteStorage;
@@ -105,7 +105,9 @@ pub mod prelude {
         Storage, Study, Trial, TrialContext, TrialState, Value,
     };
     pub use hyperopt_pruners::{MedianPruner, NopPruner, SuccessiveHalvingPruner};
-    pub use hyperopt_samplers::{GridSampler, RandomSampler, TpeSampler};
+    pub use hyperopt_samplers::{
+        BoundHandling, CmaEsSampler, GridSampler, RandomSampler, TpeSampler,
+    };
     pub use hyperopt_storage::InMemoryStorage;
     #[cfg(feature = "sqlite")]
     pub use hyperopt_storage::SqliteStorage;

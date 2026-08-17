@@ -1,0 +1,25 @@
+[package]
+name = "hyperopt-distributed"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+description = "Multi-machine distributed execution for hyperopt-rs: a study coordinator server and a worker client, over TCP."
+
+[features]
+# Optional TLS transport via rustls (ring crypto provider; no OpenSSL needed).
+tls = ["dep:rustls"]
+
+[dependencies]
+hyperopt-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"], optional = true }
+
+[dev-dependencies]
+hyperopt-samplers = { workspace = true }
+hyperopt-pruners = { workspace = true }
+hyperopt-storage = { workspace = true }
+rcgen = "0.13"

@@ -7,6 +7,7 @@ members = [
     "hyperopt-storage",
     "hyperopt",
     "hyperopt-viz",
+    "hyperopt-distributed",
 ]
 
 [workspace.package]
